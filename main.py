@@ -29,8 +29,17 @@ def database_remove_user(first_name, last_name):
     c.execute(f"DELETE FROM employee WHERE first='{first_name}' AND last='{last_name}'")
 
 
+def update_pay(first_name, pay):
+    c.execute(f"UPDATE employee SET pay = {pay} WHERE first = '{first_name}'")
+
+
 def output_database_contents():
     c.execute("SELECT * FROM employee")
+    print(c.fetchall())
+
+
+def output_single_employee(first_name):
+    c.execute(f"SELECT * FROM employee WHERE first = '{first_name}'")
     print(c.fetchall())
 
 
@@ -59,6 +68,22 @@ elif ask_to_delete == "n":
     print("No entries to be deleted")
 else:
     print("I don't know what that is")
+    pass
+
+update_user_pay = input("Would you like to update a user's pay?...")
+
+if update_user_pay == 'y':
+    output_database_contents()
+    name = input("Enter their first name: ")
+    output_single_employee(name)
+    new_pay = input("Enter new pay: ")
+    update_pay(name, new_pay)
+    output_single_employee(name)
+elif update_user_pay == 'n':
+    print("Moving on...")
+    pass
+else:
+    print("I don't know what that means")
     pass
 
 
